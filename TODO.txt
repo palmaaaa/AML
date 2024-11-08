@@ -1,3 +1,0 @@
-- Understand why transformers do not give same output of original notebook
-- Do question in transformers architecture part in theory.ipynb
-- verify section 1 in practice.ipynb (even try skip connections?????)
