@@ -149,7 +149,7 @@ class MPNN(nn.Module):
         '''
         # last MetaLayer without batch norm and without using activation functions
         edge_model = EdgeModel(hidden_dim * 2 + hidden_dim + hidden_dim, edge_out_dim, activation=False)
-        node_model = NodeModel(hidden_dim * 2 + hidden_dim + edge_out_dim, hidden_dim + hidden_dim + edge_out_dim, node_out_dim, activation=False)
+        node_model = NodeModel(hidden_dim * 2 + hidden_dim + edge_out_dim, hidden_dim + hidden_dim + node_out_dim, node_out_dim, activation=False)
         global_model = GlobalModel(hidden_dim + edge_out_dim + node_out_dim, global_out_dim, activation=False)
         self.convs.append(MetaLayer(edge_model=edge_model, node_model=node_model, global_model=global_model))
 
