@@ -161,9 +161,6 @@ class MPNN(nn.Module):
             Add your code below
             '''
             x, edge_attr, u = conv(x, edge_index, edge_attr, u, batch)
-            print(x.shape)
-            print(edge_attr.shape)
-            print(u.shape)
 
             if i != len(self.convs)-1 and self.use_bn:
                 '''
