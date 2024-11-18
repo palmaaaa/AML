@@ -1,2 +1,3 @@
 Practice/data
-Practice/datasets
+Practice/dataset/
+Practice/mnist_compressed.npz
