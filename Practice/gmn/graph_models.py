@@ -41,7 +41,7 @@ class EdgeModel(nn.Module):
         # u: [B, F_u], where B is the number of graphs.
         # batch: only here it will have shape [E] with max entry B - 1, because here it indicates the graph index for each edge.
 
-        x = [src, dest, edge_attr, u[batch]]
+        x = [dest, src, edge_attr, u[batch]]
         x = torch.cat(x, dim=-1)
         return self.edge_mlp(x)
 
@@ -65,10 +65,10 @@ class NodeModel(nn.Module):
         # u: [B, F_u]
         # batch: [N] with max entry B - 1.
 
-        row, col = edge_index 
+        col, row = edge_index 
         edge_messages = self.node_mlp_1(torch.cat([x[row], x[col], edge_attr, u[batch[row]]], dim=1))  
 
-        aggregated_messages = scatter(edge_messages, col, dim=0, reduce=self.reduce, dim_size=x.size(0)) 
+        aggregated_messages = scatter(edge_messages, row, dim=0, reduce=self.reduce, dim_size=x.size(0)) 
 
         global_info = u[batch] 
         updated_node_features = self.node_mlp_2(torch.cat([x, aggregated_messages, global_info], dim=1))
@@ -91,6 +91,7 @@ class GlobalModel(nn.Module):
         # edge_attr: [E, F_e]
         # u: [B, F_u]
         # batch: [N] with max entry B - 1.
+
 
         node_sum = scatter(x, batch, dim=0, reduce=self.reduce) 
 
